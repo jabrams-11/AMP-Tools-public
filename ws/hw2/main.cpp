@@ -56,10 +56,32 @@ int main(int argc, char** argv) {
         amp::Path2D path; // Make empty path, problem, and collision points, as they will be created by generateAndCheck()
         amp::Problem2D random_prob; 
         std::vector<Eigen::Vector2d> collision_points;
-        bool random_trial_success = HW2::generateAndCheck(algo, path, random_prob, collision_points);
+        
+        // Use the most comprehensive version of generateAndCheck to get ALL data
+        bool random_trial_success = HW2::generateAndCheck(algo, path, random_prob, collision_points, true, 0u);
+        
         LOG("Found valid solution in random environment: " << (random_trial_success ? "Yes!" : "No :("));
-
-        LOG("path length: " << path.length());
+        LOG("Path length: " << path.length());
+        LOG("Number of waypoints: " << path.waypoints.size());
+        LOG("Number of obstacles in random environment: " << random_prob.obstacles.size());
+        LOG("Workspace bounds: [" << random_prob.x_min << ", " << random_prob.x_max << "] x [" << random_prob.y_min << ", " << random_prob.y_max << "]");
+        LOG("Start position: (" << random_prob.q_init.x() << ", " << random_prob.q_init.y() << ")");
+        LOG("Goal position: (" << random_prob.q_goal.x() << ", " << random_prob.q_goal.y() << ")");
+        LOG("Number of collision points detected: " << collision_points.size());
+        
+        // Print collision points if any
+        if (!collision_points.empty()) {
+            LOG("Collision points:");
+            for (size_t i = 0; i < collision_points.size(); i++) {
+                LOG("  Collision " << i << ": (" << collision_points[i].x() << ", " << collision_points[i].y() << ")");
+            }
+        }
+        
+        // Print path waypoints for detailed analysis
+        LOG("Path waypoints:");
+        for (size_t i = 0; i < path.waypoints.size(); i++) {
+            LOG("  Waypoint " << i << ": (" << path.waypoints[i].x() << ", " << path.waypoints[i].y() << ")");
+        }
 
         // Visualize the path environment, and any collision points with obstacles
         Visualizer::makeFigure(random_prob, path, collision_points);

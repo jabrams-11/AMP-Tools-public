@@ -19,6 +19,11 @@ class MyBugAlgorithm : public amp::BugAlgorithm {
         Eigen::Vector2d rotateClockwise90(const Eigen::Vector2d& vec);
         Eigen::Vector2d rotateCounterClockwise90(const Eigen::Vector2d& vec);
         
+        // Helper method to calculate the angle bisector of two adjacent edges forming a corner
+        Eigen::Vector2d calculateCornerBisector(const Eigen::Vector2d& vertex, 
+                                               const Eigen::Vector2d& prev_vertex, 
+                                               const Eigen::Vector2d& next_vertex);
+        
         // Helper methods for surface normal detection - returns (boundary_point, wall_normal, vertex_index)
         std::tuple<Eigen::Vector2d, Eigen::Vector2d, int> findClosestBoundaryAndNormal(const Eigen::Vector2d& point, const amp::Problem2D& problem, int obstacle_index);
         
