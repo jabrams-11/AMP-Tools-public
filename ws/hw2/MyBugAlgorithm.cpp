@@ -149,7 +149,7 @@ amp::Path2D MyBugAlgorithm::plan(const amp::Problem2D& problem) {
     int step_count = 0;
 
     // Main loop: Continue until the goal is reached
-    while ((current_pos - problem.q_goal).norm() > GLOBAL_STEP_SIZE && step_count < max_steps) {
+    while ((current_pos - problem.q_goal).norm() > GLOBAL_STEP_SIZE) {
         step_count++;
         
         // === STATE 1: MOVE TOWARDS GOAL ===
@@ -199,7 +199,7 @@ amp::Path2D MyBugAlgorithm::plan(const amp::Problem2D& problem) {
             
             // Wall following loop - go clockwise around obstacle
             int wall_follow_steps = 0;
-            while (wall_follow_steps < 200000) { // Safety limit for wall following
+            while (true) {
     
                 // Check if current position is closer to goal than previous minimum
                 double current_dist_to_goal = (current_pos - problem.q_goal).norm();
@@ -316,7 +316,6 @@ amp::Path2D MyBugAlgorithm::plan(const amp::Problem2D& problem) {
 
                 }
             }
-            LOG("Circumnavigation complete!");
             
           
           
