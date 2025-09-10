@@ -12,5 +12,15 @@ class MyBugAlgorithm : public amp::BugAlgorithm {
         // Add any other methods here...
     
     private:
+        // Helper method for collision detection - returns obstacle index or -1 if no collision
+        int isInCollision(const Eigen::Vector2d& point, const amp::Problem2D& problem);
+        
+        // Helper methods for vector rotation
+        Eigen::Vector2d rotateClockwise90(const Eigen::Vector2d& vec);
+        Eigen::Vector2d rotateCounterClockwise90(const Eigen::Vector2d& vec);
+        
+        // Helper methods for surface normal detection
+        std::pair<Eigen::Vector2d, Eigen::Vector2d> findClosestBoundaryAndNormal(const Eigen::Vector2d& point, const amp::Problem2D& problem, int obstacle_index);
+        
         // Add any member variables here...
 };
